@@ -88,3 +88,9 @@ export const searchById = async(at, data) => {
     })
   });
 }
+
+const _createError = (err, res) => {
+  let response;
+  if (res) response = res.body || res.text
+  return err ? err.message : `Wrong response body type. Expected an Object and got ${typeof response}.`
+}
