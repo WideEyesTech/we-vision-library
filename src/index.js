@@ -1,4 +1,7 @@
+import promise from 'es6-promise'
 import request from 'superagent'
+
+promise.polyfill()
 
 const HOST = 'http://api.wide-eyes.it'
 
@@ -19,9 +22,7 @@ export const searchByImage = (accessToken, data) => {
       let products = [];
 
       res.body.results.map(c => {
-        categories.push({
-          name: c.category
-        });
+        categories.push({ name: c.category })
         products = products.concat(c.products)
       });
 

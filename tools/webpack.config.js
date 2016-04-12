@@ -41,10 +41,6 @@ const config = {
     version: DEBUG
   },
 
-  plugins: [
-    new webpack.ProvidePlugin({ 'Promise': 'es6-promise' })
-  ],
-
   resolve: {
     extensions: ['', '.webpack.js', '.web.js', '.js',]
   },

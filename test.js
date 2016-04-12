@@ -1,5 +1,9 @@
-import request from 'superagent'
+var foo = require('./index.js')
 
-import { searchByImage } from './index.js'
+console.log(foo)
 
-console.log(searchByImage)
+foo.searchByImage().then(function(res) {
+  console.log(res)
+}, function(err) {
+  console.log(err)
+})
