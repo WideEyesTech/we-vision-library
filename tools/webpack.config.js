@@ -67,14 +67,10 @@ const config = {
 const clientConfig = _.merge({}, config, {
   entry: './src/index.js',
   output: {
-    filename: 'index.min.js',
+    filename: 'index.js',
     library: 'WeVision',
     libraryTarget: 'umd',
     path: path.join(__dirname, '../')
-  },
-
-  externals: {
-    "superagent": "request"
   },
 
   // Choose a developer tool to enhance debugging
