@@ -22,16 +22,19 @@ async function start() {
   // await run(copy.bind(undefined, true))
 
   await new Promise((resolve) => {
-    const compiler = webpack(clientConfig, function(err) {
-      if (err) return console.log(err)
-    })
+    const compiler = webpack(clientConfig)
 
     compiler.run(function(err, stats) {
-      if (err) return console.log(err)
+      if (err) {
+        console.log(err)
+        reject()
+      }
+
       process.stdout.write(stats.toString({
         colors: true,
         chunks: false
       }))
+
       process.stdout.write('\n')
       resolve()
     })

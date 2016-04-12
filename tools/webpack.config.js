@@ -48,9 +48,12 @@ const config = {
   module: {
     loaders: [
       {
-        test: /\.js?$/,
         exclude: /node_modules/,
-        loaders: [`babel?${JSON.stringify({ presets: ['es2015'] })}`]
+        loader: 'babel',
+        test: /\.js?$/,
+        query: {
+          presets: ['es2015']
+        }
       }
     ]
   }
