@@ -5,8 +5,7 @@
   "main": "index.js",
   "scripts": {
     "build": "babel-node tools/run start --release",
-    "start": "babel-node tools/run start",
-    "test": "node test | tap-spec"
+    "start": "babel-node tools/run start"
   },
   "author": "",
   "license": "ISC",

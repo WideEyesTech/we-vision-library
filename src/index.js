@@ -3,10 +3,13 @@ import Promise from 'bluebird'
 
 const HOST = 'http://api.wide-eyes.it'
 
-export const searchByImage = (at, data) => {
-  return new Promise((resolve, reject) => {
-    const error = _prevCheck(Array.apply(null, arguments))
-    if (error) reject(error)
+export const searchByImage = (at, data) =>
+  new Promise((resolve, reject) => {
+    try {
+      _prevCheck(Array.apply(null, arguments))
+    } catch (e) {
+      reject(e)
+    }
 
     request
       .post(`${HOST}/v4/SearchByImage`)
@@ -33,11 +36,11 @@ export const searchByImage = (at, data) => {
         });
       })
   })
-}
 
 
-export const getCategoryData = async(at, weCategories) => {
-  return new Promise((resolve, reject) => {
+
+export const getCategoryData = async(at, weCategories) =>
+  new Promise((resolve, reject) => {
     request
       .post(`${HOST}/get_category_data`)
       .set(`Authorization`, `Bearer ${at}`)
@@ -50,13 +53,15 @@ export const getCategoryData = async(at, weCategories) => {
         }
       })
   });
-}
 
-export const showProducts = async(at, data) => {
 
-  return new Promise((resolve, reject) => {
-    const error = _prevCheck(Array.apply(null, arguments))
-    if (error) reject(error)
+export const showProducts = async(at, data) =>
+  new Promise((resolve, reject) => {
+    try {
+      _prevCheck(Array.apply(null, arguments))
+    } catch (e) {
+      reject(e)
+    }
 
     request
       .post(`${HOST}/show_products`)
@@ -70,13 +75,15 @@ export const showProducts = async(at, data) => {
         }
       })
   });
-}
 
-export const searchById = async(at, data) => {
 
-  return new Promise((resolve, reject) => {
-    const error = _prevCheck(Array.apply(null, arguments))
-    if (error) reject(error)
+export const searchById = async(at, data) =>
+  new Promise((resolve, reject) => {
+    try {
+      _prevCheck(Array.apply(null, arguments))
+    } catch (e) {
+      reject(e)
+    }
 
     request
       .post(`${HOST}/v4/SearchById`)
@@ -94,27 +101,25 @@ export const searchById = async(at, data) => {
         }
       })
   });
-}
+
 
 const _prevCheck = (args) => {
   switch (args.length) {
     case 2:
       if (typeof args[0] !== 'string' || typeof args[1] !== 'object') {
-        return new Error('Wrong argument type')
+        throw new Error('Wrong argument type')
       }
       break;
     case 1:
       if (typeof args[0] !== 'string') {
-        return new Error('Wrong argument type')
+        throw new Error('Wrong argument type')
       }
       break;
     default:
-      return new Error('Wrong argument count')
+      throw new Error('Wrong argument count')
   }
 }
 
 const _createError = (err, res) => {
-  let response;
-  if (res) response = res.body || res.text
-  return err ? err.message : `Wrong response body type. Expected an Object and got ${typeof response}.`
+  return err ? err : new Error(`Wrong response body type. Expected an Object and got ${typeof res.body}.`)
 }
