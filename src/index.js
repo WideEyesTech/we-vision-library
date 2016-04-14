@@ -1,20 +1,15 @@
+import _ from 'lodash'
 import request from 'superagent'
 import Promise from 'bluebird'
 
 const HOST = 'http://api.wide-eyes.it'
 
-export const searchByImage = (at, data) =>
+export const searchByImage = (data, headers) =>
   new Promise((resolve, reject) => {
-    try {
-      _prevCheck(Array.apply(null, arguments))
-    } catch (e) {
-      reject(e)
-    }
+    let req = request.post(`${HOST}/v4/SearchByImage`)
+    req = setHeaders(req, headers)
 
-    request
-      .post(`${HOST}/v4/SearchByImage`)
-      .set(`Authorization`, `Bearer ${at}`)
-      .send(data)
+    return req.send(data)
       .end((err, res) => {
         if (err || !(res.body instanceof Object)) {
           return reject(_createError(err));
@@ -39,12 +34,12 @@ export const searchByImage = (at, data) =>
 
 
 
-export const getCategoryData = async(at, weCategories) =>
+export const getCategoryData = async(data, headers) =>
   new Promise((resolve, reject) => {
-    request
-      .post(`${HOST}/get_category_data`)
-      .set(`Authorization`, `Bearer ${at}`)
-      .send({weCategories: weCategories || false})
+    let req = request.post(`${HOST}/get_category_data`)
+    req = setHeaders(req, headers)
+
+    return req.send({weCategories: data.weCategories || false})
       .end((err, res) => {
         if (err || !(res.body instanceof Object)) {
           reject(_createError(err, res));
@@ -55,18 +50,12 @@ export const getCategoryData = async(at, weCategories) =>
   });
 
 
-export const showProducts = async(at, data) =>
+export const showProducts = async(data, headers) =>
   new Promise((resolve, reject) => {
-    try {
-      _prevCheck(Array.apply(null, arguments))
-    } catch (e) {
-      reject(e)
-    }
+    let req = request.post(`${HOST}/show_products`)
+    req = setHeaders(req, headers)
 
-    request
-      .post(`${HOST}/show_products`)
-      .set(`Authorization`, `Bearer ${at}`)
-      .send(data)
+    return req.send(data)
       .end((err, res) => {
         if (err || !(res.body instanceof Object)) {
           reject(_createError(err, res));
@@ -77,47 +66,34 @@ export const showProducts = async(at, data) =>
   });
 
 
-export const searchById = async(at, data) =>
+export const searchById = async(data, headers) =>
   new Promise((resolve, reject) => {
-    try {
-      _prevCheck(Array.apply(null, arguments))
-    } catch (e) {
-      reject(e)
-    }
+    let req = request.post(`${HOST}/v4/SearchById`)
+    req = setHeaders(req, headers)
 
-    request
-      .post(`${HOST}/v4/SearchById`)
-      .set(`Authorization`, `Bearer ${at}`)
-      .send(data)
+    return req.send(data)
       .end((err, res) => {
         if (err || !(res.body instanceof Object)) {
           reject(_createError(err, res));
         } else {
-          const _payload = res.body.results && res.body.results.length
+          const payload = res.body.results && res.body.results.length
             ? res.body.results[0].products
             : []
 
-          resolve(_payload);
+          resolve(payload);
         }
       })
   });
 
 
-const _prevCheck = (args) => {
-  switch (args.length) {
-    case 2:
-      if (typeof args[0] !== 'string' || typeof args[1] !== 'object') {
-        throw new Error('Wrong argument type')
-      }
-      break;
-    case 1:
-      if (typeof args[0] !== 'string') {
-        throw new Error('Wrong argument type')
-      }
-      break;
-    default:
-      throw new Error('Wrong argument count')
+const setHeaders = (req, headers) => {
+  if (headers && typeof headers === 'object') {
+    for (const key in headers) {
+      req = req.set(key, headers[key])
+    }
   }
+
+  return req;
 }
 
 const _createError = (err, res) => {
