@@ -32,8 +32,6 @@ export const searchByImage = (data, headers) =>
       })
   })
 
-
-
 export const getCategoryData = async(data, headers) =>
   new Promise((resolve, reject) => {
     let req = request.post(`${HOST}/get_category_data`)
@@ -49,7 +47,6 @@ export const getCategoryData = async(data, headers) =>
       })
   });
 
-
 export const showProducts = async(data, headers) =>
   new Promise((resolve, reject) => {
     let req = request.post(`${HOST}/show_products`)
@@ -64,7 +61,6 @@ export const showProducts = async(data, headers) =>
         }
       })
   });
-
 
 export const searchById = async(data, headers) =>
   new Promise((resolve, reject) => {
@@ -84,7 +80,6 @@ export const searchById = async(data, headers) =>
         }
       })
   });
-
 
 const setHeaders = (req, headers) => {
   if (headers && typeof headers === 'object') {
