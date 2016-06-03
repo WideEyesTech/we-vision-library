@@ -34,9 +34,7 @@ const searchByImage = (data, headers) =>
 
 const getCategoryData = (data, headers) =>
   new Promise((resolve, reject) => {
-    const req = request.post(`${HOST}/get_category_data`)
-    req = setHeaders(req, headers)
-
+    const req = setHeaders(request.post(`${HOST}/get_category_data`), headers)
     return req.send({weCategories: data.weCategories || false})
       .end((err, res) => {
         if (err || !(res.body instanceof Object)) {
