@@ -25,16 +25,16 @@ const searchByImage = (data, headers) =>
         });
 
         return resolve({
+          attributes,
           categories,
           products,
-          attributes
         });
       })
   })
 
-const getCategoryData = async(data, headers) =>
+const getCategoryData = (data, headers) =>
   new Promise((resolve, reject) => {
-    let req = request.post(`${HOST}/get_category_data`)
+    const req = request.post(`${HOST}/get_category_data`)
     req = setHeaders(req, headers)
 
     return req.send({weCategories: data.weCategories || false})
@@ -42,28 +42,12 @@ const getCategoryData = async(data, headers) =>
         if (err || !(res.body instanceof Object)) {
           reject(_createError(err, res));
         } else {
-          const genders = []
-          const categories = []
-          const subcategories = []
-
-          for (const gender in res.body.categories) {
-            if (res.body.categories.hasOwnProperty(gender)) {
-              genders.push({key: gender, name: gender})
-              genders.map(c => {
-                categories.push({
-                  key: c.key,
-                  name: c.name
-                })
-              })
-            }
-          }
-          res.body.
           resolve(res.body.categories);
         }
       })
   });
 
-const showProducts = async(data, headers) =>
+const showProducts = (data, headers) =>
   new Promise((resolve, reject) => {
     let req = request.post(`${HOST}/show_products`)
     req = setHeaders(req, headers)
@@ -78,7 +62,7 @@ const showProducts = async(data, headers) =>
       })
   });
 
-const searchById = async(data, headers) =>
+const searchById = (data, headers) =>
   new Promise((resolve, reject) => {
     let req = request.post(`${HOST}/v4/SearchById`)
     req = setHeaders(req, headers)
