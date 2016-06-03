@@ -4,7 +4,7 @@ import Promise from 'bluebird'
 
 const HOST = 'http://api.wide-eyes.it'
 
-export const searchByImage = (data, headers) =>
+const searchByImage = (data, headers) =>
   new Promise((resolve, reject) => {
     let req = request.post(`${HOST}/v4/SearchByImage`)
     req = setHeaders(req, headers)
@@ -32,7 +32,7 @@ export const searchByImage = (data, headers) =>
       })
   })
 
-export const getCategoryData = async(data, headers) =>
+const getCategoryData = async(data, headers) =>
   new Promise((resolve, reject) => {
     let req = request.post(`${HOST}/get_category_data`)
     req = setHeaders(req, headers)
@@ -42,12 +42,28 @@ export const getCategoryData = async(data, headers) =>
         if (err || !(res.body instanceof Object)) {
           reject(_createError(err, res));
         } else {
+          const genders = []
+          const categories = []
+          const subcategories = []
+
+          for (const gender in res.body.categories) {
+            if (res.body.categories.hasOwnProperty(gender)) {
+              genders.push({key: gender, name: gender})
+              genders.map(c => {
+                categories.push({
+                  key: c.key,
+                  name: c.name
+                })
+              })
+            }
+          }
+          res.body.
           resolve(res.body.categories);
         }
       })
   });
 
-export const showProducts = async(data, headers) =>
+const showProducts = async(data, headers) =>
   new Promise((resolve, reject) => {
     let req = request.post(`${HOST}/show_products`)
     req = setHeaders(req, headers)
@@ -62,7 +78,7 @@ export const showProducts = async(data, headers) =>
       })
   });
 
-export const searchById = async(data, headers) =>
+const searchById = async(data, headers) =>
   new Promise((resolve, reject) => {
     let req = request.post(`${HOST}/v4/SearchById`)
     req = setHeaders(req, headers)
@@ -93,4 +109,11 @@ const setHeaders = (req, headers) => {
 
 const _createError = (err, res) => {
   return err ? err : new Error(`Wrong response body type. Expected an Object and got ${typeof res.body}.`)
+}
+
+export default {
+  getCategoryData,
+  searchByImage,
+  showProducts,
+  searchById,
 }
