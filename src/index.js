@@ -2,7 +2,7 @@ import _ from 'lodash'
 import request from 'superagent'
 import Promise from 'bluebird'
 
-const HOST = 'http://api.wide-eyes.it'
+const HOST = 'http://api-aws.wide-eyes.it'
 
 const searchByImage = (data, headers) =>
   new Promise((resolve, reject) => {
