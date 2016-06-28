@@ -22,4 +22,13 @@ ES5:
   var _weVisionLibrary = require('we-vision-library');
 ```
 
+All endPoints accept two arguments as literal Objects and return a Promise that will be resolved with the response body, or will be rejected if an unexpected error occurs:
+
+```
+// All endpoints have the same signature, this is just an example
+searchById(body: Object, headers: Object)
+	.then(body => console.log(body))
+	.catch(err => console.error(err.message))
+```
+
 :)
