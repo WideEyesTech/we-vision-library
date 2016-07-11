@@ -48,7 +48,13 @@ const login = (data, headers) =>
 
 const getUser = (data, headers) =>
   new Promise((resolve, reject) => {
-    let req = request.get(`${HOST}/users/show/${data.id}`)
+    let req
+    if (data && data.id) {
+      req = request.get(`${HOST}/users/show/${data.id}`)
+    } else {
+      req = request.get(`${HOST}/users/show`)
+    }
+
     req = setHeaders(req, headers)
     req
       .send(data)
