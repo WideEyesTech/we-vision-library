@@ -11,6 +11,7 @@
   "license": "ISC",
   "dependencies": {
     "bluebird": "^3.3.4",
+    "es6-promise": "^3.2.1",
     "lodash": "^4.10.0",
     "superagent": "^1.8.3"
   },

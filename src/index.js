@@ -1,7 +1,7 @@
+import 'es6-promise'
 import request from 'superagent'
-import Promise from 'bluebird'
 
-const HOST = 'http://api-aws.wide-eyes.it'
+const HOST = 'http://api.wide-eyes.it'
 
 const searchByImage = (data, headers) =>
   new Promise((resolve, reject) => {
@@ -28,6 +28,36 @@ const searchByImage = (data, headers) =>
           categories,
           products
         })
+      })
+  })
+
+const login = (data, headers) =>
+  new Promise((resolve, reject) => {
+    let req = request.post(`${HOST}/login`)
+    req = setHeaders(req, headers)
+    req
+      .send(data)
+      .end((err, res) => {
+        if (err || !(res.body instanceof Object)) {
+          reject(createError(err))
+        } else {
+          resolve(res.body.access_token)
+        }
+      })
+  })
+
+const getUser = (data, headers) =>
+  new Promise((resolve, reject) => {
+    let req = request.get(`${HOST}/users/show/${data.id}`)
+    req = setHeaders(req, headers)
+    req
+      .send(data)
+      .end((err, res) => {
+        if (err || !(res.body instanceof Object)) {
+          reject(createError(err))
+        } else {
+          resolve(res.body)
+        }
       })
   })
 
@@ -98,5 +128,7 @@ export default {
   getCategoryData,
   searchByImage,
   showProducts,
-  searchById
+  searchById,
+  getUser,
+  login
 }
