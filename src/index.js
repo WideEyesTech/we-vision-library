@@ -1,5 +1,5 @@
-import 'es6-promise'
-import request from 'superagent'
+require('es6-promise')
+const request = require('superagent')
 
 const HOST = 'http://api.wide-eyes.it'
 
@@ -14,20 +14,7 @@ const searchByImage = (data, headers) =>
           return reject(createError(err))
         }
 
-        const attributes = res.body.attributes
-        const categories = []
-        let products = []
-
-        res.body.results.map(c => {
-          categories.push({ name: c.category })
-          products = products.concat(c.products)
-        })
-
-        return resolve({
-          attributes,
-          categories,
-          products
-        })
+        return resolve(res.body)
       })
   })
 
@@ -41,7 +28,7 @@ const login = (data, headers) =>
         if (err || !(res.body instanceof Object)) {
           reject(createError(err))
         } else {
-          resolve(res.body.access_token)
+          resolve(res.body)
         }
       })
   })
@@ -75,7 +62,7 @@ const getCategoryData = (data, headers) =>
         if (err || !(res.body instanceof Object)) {
           reject(createError(err, res))
         } else {
-          resolve(res.body.categories)
+          resolve(res.body)
         }
       })
   })
@@ -90,7 +77,7 @@ const showProducts = (data, headers) =>
         if (err || !(res.body instanceof Object)) {
           reject(createError(err, res))
         } else {
-          resolve(res.body.products)
+          resolve(res.body)
         }
       })
   })
@@ -105,11 +92,7 @@ const searchById = (data, headers) =>
         if (err || !(res.body instanceof Object)) {
           reject(createError(err, res))
         } else {
-          const payload = res.body.results && res.body.results.length
-            ? res.body.results[0].products
-            : []
-
-          resolve(payload)
+          resolve(res.body)
         }
       })
   })
@@ -130,7 +113,7 @@ const createError = (err, res) => {
     : new Error(`Wrong response body type. Expected an Object and got ${typeof res.body}.`)
 }
 
-export default {
+module.exports = {
   getCategoryData,
   searchByImage,
   showProducts,
