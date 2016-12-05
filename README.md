@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/WideEyesTech/we-vision-library.svg?branch=master)](https://travis-ci.org/WideEyesTech/we-vision-library)
+
 #We Vision Library
 
 Front end library to perform HTTP calls to the we vision 2 api.
