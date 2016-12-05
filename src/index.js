@@ -10,8 +10,8 @@ exports.searchByImage = (data, headers) =>
 
     return req.send(data)
       .end((err, res) => {
-        if (err || !(res.body instanceof Object)) {
-          return reject(createError(err))
+        if (err) {
+          return reject(createError(err, res))
         }
 
         return resolve(res.body)
@@ -25,8 +25,8 @@ exports.login = (data, headers) =>
     req
       .send(data)
       .end((err, res) => {
-        if (err || !(res.body instanceof Object)) {
-          reject(createError(err))
+        if (err) {
+          reject(createError(err, res))
         } else {
           resolve(res.body)
         }
@@ -46,8 +46,8 @@ exports.getUser = (data, headers) =>
     req
       .send(data)
       .end((err, res) => {
-        if (err || !(res.body instanceof Object)) {
-          reject(createError(err))
+        if (err) {
+          reject(createError(err, res))
         } else {
           resolve(res.body)
         }
@@ -59,7 +59,7 @@ exports.getCategoryData = (data, headers) =>
     const req = setHeaders(request.post(`${HOST}/get_category_data`), headers)
     return req.send({weCategories: data.weCategories || false})
       .end((err, res) => {
-        if (err || !(res.body instanceof Object)) {
+        if (err) {
           reject(createError(err, res))
         } else {
           resolve(res.body)
@@ -74,7 +74,7 @@ exports.showProducts = (data, headers) =>
 
     return req.send(data)
       .end((err, res) => {
-        if (err || !(res.body instanceof Object)) {
+        if (err) {
           reject(createError(err, res))
         } else {
           resolve(res.body)
@@ -89,7 +89,7 @@ exports.searchById = (data, headers) =>
 
     return req.send(data)
       .end((err, res) => {
-        if (err || !(res.body instanceof Object)) {
+        if (err) {
           reject(createError(err, res))
         } else {
           resolve(res.body)

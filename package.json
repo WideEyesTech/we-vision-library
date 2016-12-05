@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "ava tests",
+    "test": "jest",
     "start": "babel-node tools/run start",
     "build": "babel-node tools/run start --release",
     "semantic-release": "semantic-release pre && npm publish && semantic-release post"
@@ -18,7 +18,6 @@
     "superagent": "^1.8.3"
   },
   "devDependencies": {
-    "ava": "^0.17.0",
     "babel-cli": "^6.7.5",
     "babel-core": "^6.7.6",
     "babel-loader": "^6.2.4",
@@ -27,13 +26,16 @@
     "babel-preset-es2015": "^6.6.0",
     "babel-preset-stage-0": "^6.5.0",
     "eslint": "^2.7.0",
+    "jest-cli": "^17.0.3",
     "semantic-release": "^6.3.2",
     "tap-spec": "^4.1.1",
-    "tape": "^4.5.1",
     "webpack": "^1.12.15"
   },
   "repository": {
     "type": "git",
     "url": "https://github.com/WideEyesTech/we-vision-library.git"
+  },
+  "jest": {
+    "testEnvironment": "node"
   }
 }
