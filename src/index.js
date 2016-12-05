@@ -1,9 +1,9 @@
 require('es6-promise')
-const request = require('superagent')
 
+const request = require('superagent')
 const HOST = 'http://api.wide-eyes.it'
 
-const searchByImage = (data, headers) =>
+exports.searchByImage = (data, headers) =>
   new Promise((resolve, reject) => {
     let req = request.post(`${HOST}/v4/SearchByImage`)
     req = setHeaders(req, headers)
@@ -18,7 +18,7 @@ const searchByImage = (data, headers) =>
       })
   })
 
-const login = (data, headers) =>
+exports.login = (data, headers) =>
   new Promise((resolve, reject) => {
     let req = request.post(`${HOST}/login`)
     req = setHeaders(req, headers)
@@ -33,7 +33,7 @@ const login = (data, headers) =>
       })
   })
 
-const getUser = (data, headers) =>
+exports.getUser = (data, headers) =>
   new Promise((resolve, reject) => {
     let req
     if (data && data.id) {
@@ -54,7 +54,7 @@ const getUser = (data, headers) =>
       })
   })
 
-const getCategoryData = (data, headers) =>
+exports.getCategoryData = (data, headers) =>
   new Promise((resolve, reject) => {
     const req = setHeaders(request.post(`${HOST}/get_category_data`), headers)
     return req.send({weCategories: data.weCategories || false})
@@ -67,7 +67,7 @@ const getCategoryData = (data, headers) =>
       })
   })
 
-const showProducts = (data, headers) =>
+exports.showProducts = (data, headers) =>
   new Promise((resolve, reject) => {
     let req = request.post(`${HOST}/show_products`)
     req = setHeaders(req, headers)
@@ -82,7 +82,7 @@ const showProducts = (data, headers) =>
       })
   })
 
-const searchById = (data, headers) =>
+exports.searchById = (data, headers) =>
   new Promise((resolve, reject) => {
     let req = request.post(`${HOST}/v4/SearchById`)
     req = setHeaders(req, headers)
@@ -111,13 +111,4 @@ const createError = (err, res) => {
   return err && err.message
     ? err.message
     : new Error(`Wrong response body type. Expected an Object and got ${typeof res.body}.`)
-}
-
-module.exports = {
-  getCategoryData,
-  searchByImage,
-  showProducts,
-  searchById,
-  getUser,
-  login
 }
