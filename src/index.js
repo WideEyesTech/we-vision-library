@@ -1,3 +1,5 @@
+// START: this comment should be deleted
+
 require('es6-promise')
 
 const request = require('superagent')
