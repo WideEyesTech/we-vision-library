@@ -27,7 +27,7 @@
     "babel-preset-stage-0": "^6.5.0",
     "eslint": "^2.7.0",
     "jest-cli": "^17.0.3",
-    "semantic-release": "^6.3.2",
+    "semantic-release": "^17.2.3",
     "tap-spec": "^4.1.1",
     "webpack": "^1.12.15"
   },
